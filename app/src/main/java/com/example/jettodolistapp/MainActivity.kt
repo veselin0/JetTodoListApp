@@ -106,17 +106,30 @@ fun RoundedCornersBoxesScrollableRow() {
 }
 
 @Composable
-fun getCheckBoxOptions(titles: List<String>): List<CheckBoxParameters> {
-    return titles.map { it ->
-        var stateOfCheckBoxParameters by rememberSaveable { mutableStateOf(false) }
-        CheckBoxParameters(
-            title = it,
-            colors = Colors,
-            isChecked = stateOfCheckBoxParameters
-        ) { stateOfCheckBoxParameters = it }
+fun getColorForTitle(title: String): Color {
+    return when (title) {
+        "Business Text Holder" -> Colors.businessColor
+        "Personal Text Holder" -> Colors.personalColor
+        "Other Text Holder" -> Colors.otherColor
+        else -> Colors.appBackgroundColor
     }
 }
 
+@Composable
+fun getCheckBoxOptions(titles: List<String>): List<CheckBoxParameters> {
+    return titles.map { title ->
+        var stateOfCheckBoxParameters by rememberSaveable { mutableStateOf(false) }
+        val checkedColor = getColorForTitle(title)
+        val uncheckedColor = getColorForTitle(title)
+        CheckBoxParameters(
+            title = title,
+            isChecked = stateOfCheckBoxParameters,
+            onCheckedChanged = { stateOfCheckBoxParameters = it },
+            checkedColor = checkedColor,
+            uncheckedColor = uncheckedColor
+        )
+    }
+}
 @Composable
 fun RoundedCornersBoxesScrollableColumn() {
     Column(
@@ -133,13 +146,13 @@ fun RoundedCornersBoxesScrollableColumn() {
         val myCheckBoxOptions =
             getCheckBoxOptions(titles)
         myCheckBoxOptions.forEach {
-            RoundedCornersBoxTasks(it, Colors)
+            RoundedCornersBoxTasks(it)
         }
     }
 }
 
 @Composable
-fun RoundedCornersBoxTasks(checkBoxParameters: CheckBoxParameters, colors: Colors) {
+fun RoundedCornersBoxTasks(checkBoxParameters: CheckBoxParameters) {
 
     Box(
         modifier = Modifier
@@ -157,15 +170,13 @@ fun RoundedCornersBoxTasks(checkBoxParameters: CheckBoxParameters, colors: Color
                 onCheckedChange = { checkBoxParameters.onCheckedChanged(!checkBoxParameters.isChecked) },
                 enabled = true,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = colors, // Color for checked state
-                    uncheckedColor = colors // Color for unchecked state
+                    checkedColor = checkBoxParameters.checkedColor,
+                    uncheckedColor = checkBoxParameters.checkedColor
                 )
             )
             Text(
                 text = checkBoxParameters.title,
                 color = Color.White,
-//                textAlign = TextAlign.Center,
-//                modifier = Modifier.padding(start = 8.dp, top = 24.dp)
             )
 
         }
@@ -191,7 +202,7 @@ fun PrimaryScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppTitle(text = "Welcome, Gocho!", padding = 64, font_size = 32)
-            Column(modifier = Modifier.fillMaxWidth().background(Color.Green)) {
+            Column(modifier = Modifier.fillMaxWidth().background(appBackgroundColor)) {
                 Text(
                     text = "Categories"
                         .uppercase(),
@@ -202,7 +213,7 @@ fun PrimaryScreen() {
                 RoundedCornersBoxesScrollableRow()
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Column(modifier = Modifier.fillMaxWidth().background(Color.Red)) {
+            Column(modifier = Modifier.fillMaxWidth().background(appBackgroundColor)) {
                 Text(
                     text = "Tasks"
                         .uppercase(),
@@ -220,14 +231,13 @@ fun PrimaryScreen() {
 @Composable
 fun AppTitle(text: String, padding: Int, font_size: Int) {
     val padding = padding
-    val fontSize = font_size
     Text(
         text = "$text"
             .uppercase(),
         modifier = Modifier.padding(vertical = padding.dp),
         color = Color.White,
         fontWeight = FontWeight.Bold,
-        fontSize = fontSize.sp
+        fontSize = font_size.sp
     )
 }
 

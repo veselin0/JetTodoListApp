@@ -1,10 +1,12 @@
 package com.example.jettodolistapp
 
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.ui.graphics.Color
 
-class CheckBoxParameters(
+data class CheckBoxParameters(
     val title: String,
-    var colors: Colors,
     var isChecked: Boolean = false,
-    var onCheckedChanged: (Boolean) -> Unit
+    var onCheckedChanged: (Boolean) -> Unit,
+    var checkedColor: Color,
+    var uncheckedColor: Color
 )
