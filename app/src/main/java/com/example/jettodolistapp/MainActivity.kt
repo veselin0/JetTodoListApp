@@ -7,21 +7,29 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,6 +50,7 @@ import com.example.jettodolistapp.Colors.appBackgroundColor
 import com.example.jettodolistapp.Colors.businessColor
 import com.example.jettodolistapp.Colors.otherColor
 import com.example.jettodolistapp.Colors.personalColor
+import com.example.jettodolistapp.Colors.fabColor
 import com.example.jettodolistapp.ui.theme.JetTodoListAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +68,26 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun MyFab() {
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .wrapContentSize(align = Alignment.BottomEnd)
+            .background(Color.DarkGray)
+    ) {
+        FloatingActionButton(
+            onClick = { /* Handle FAB click event */ },
+            contentColor = Color.White,
+            containerColor = fabColor,
+            shape = RoundedCornerShape(32.dp)
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Add Icon")
+        }
+    }
+
 }
 
 @Composable
@@ -130,16 +159,37 @@ fun getCheckBoxOptions(titles: List<String>): List<CheckBoxParameters> {
         )
     }
 }
+
 @Composable
 fun RoundedCornersBoxesScrollableColumn() {
     Column(
         Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         var titles = listOf(
             "Business Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
+            "Personal Text Holder",
             "Personal Text Holder",
             "Other Text Holder"
         )
@@ -185,7 +235,6 @@ fun RoundedCornersBoxTasks(checkBoxParameters: CheckBoxParameters) {
 }
 
 
-
 @Composable
 fun PrimaryScreen() {
     Column(
@@ -202,7 +251,9 @@ fun PrimaryScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AppTitle(text = "Welcome, Gocho!", padding = 64, font_size = 32)
-            Column(modifier = Modifier.fillMaxWidth().background(appBackgroundColor)) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .background(appBackgroundColor)) {
                 Text(
                     text = "Categories"
                         .uppercase(),
@@ -213,7 +264,9 @@ fun PrimaryScreen() {
                 RoundedCornersBoxesScrollableRow()
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Column(modifier = Modifier.fillMaxWidth().background(appBackgroundColor)) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .background(appBackgroundColor)) {
                 Text(
                     text = "Tasks"
                         .uppercase(),
@@ -221,8 +274,31 @@ fun PrimaryScreen() {
                     color = Color.White,
                     fontSize = 16.sp,
                 )
-                RoundedCornersBoxesScrollableColumn()
+                BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                    // Scrollable content goes here
+                    RoundedCornersBoxesScrollableColumn()
+
+
+
+                    Box(
+                        modifier = Modifier
+                            .offset(
+                                x = maxWidth - (64.dp + 16.dp), // Adjust the values as needed
+                                y = maxHeight - (64.dp + 16.dp)
+                            )
+                    ) {
+                        FloatingActionButton(
+                            onClick = { /* Handle FAB click event */ },
+                            contentColor = Color.Black,
+                            containerColor = Color.Cyan
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = "Icon")
+                        }
+                    }
+                }
+
             }
+
         }
     }
 }

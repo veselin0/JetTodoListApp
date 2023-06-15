@@ -8,4 +8,5 @@ object Colors {
     val businessColor = Color(0xFFFF5722)
     val personalColor = Color(0xFF009688)
     val otherColor = Color(0xFF8BC34A)
+    val fabColor = Color(0xFFE91E63)
 }
