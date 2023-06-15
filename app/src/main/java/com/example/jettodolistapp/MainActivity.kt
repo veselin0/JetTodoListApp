@@ -289,8 +289,8 @@ fun PrimaryScreen() {
                     ) {
                         FloatingActionButton(
                             onClick = { /* Handle FAB click event */ },
-                            contentColor = Color.Black,
-                            containerColor = Color.Cyan
+                            contentColor = Color.White,
+                            containerColor = fabColor
                         ) {
                             Icon(Icons.Default.Add, contentDescription = "Icon")
                         }
